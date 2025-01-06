@@ -2,7 +2,7 @@
 import { useGetTeamsQuery } from "@/state/api";
 import React from "react";
 import { useAppSelector } from "../redux";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import {
   DataGrid,
   GridColDef,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@/app/redux";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import ModalNewTask from "@/components/ModalNewTask";
 import TaskCard from "@/components/TaskCard";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
@@ -77,7 +77,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
-  const { data: currentUser } = useGetAuthUserQuery({});
+  // const { data: currentUser } = useGetAuthUserQuery({});
   // const userId = currentUser?.userDetails?.userId ?? null;
   const userId = 1;
   const {
