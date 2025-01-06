@@ -70,7 +70,7 @@ export function Sidebar() {
 
         <section className="flex items-center gap-5 border-y-[1.5px] border-gray-200 px-8 py-4 dark:border-gray-700">
           <Image
-            src="/Micbol project.png"
+            src="https://pmg-s3-images.s3.us-east-1.amazonaws.com/Micbol.png"
             alt="Logo"
             width={95}
             height={95}
