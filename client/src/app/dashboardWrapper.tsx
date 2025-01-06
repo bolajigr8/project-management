@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
+import AuthProvider from "./authProvider";
 import * as React from "react";
 import StoreProvider, { useAppSelector } from "./redux";
 
@@ -43,7 +44,9 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
 export function DashboardWrapper({ children }: { children: React.ReactNode }) {
   return (
     <StoreProvider>
-      <DashboardLayout>{children}</DashboardLayout>
+      <AuthProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </AuthProvider>
     </StoreProvider>
   );
 }
