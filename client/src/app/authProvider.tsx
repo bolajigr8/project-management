@@ -44,7 +44,7 @@ const formFields = {
 
 const AuthProvider = ({ children }: any) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="mt-[7rem] flex items-center justify-center sm:mt-[10rem]">
       <Authenticator formFields={formFields}>
         {({ user }: any) =>
           user ? (
