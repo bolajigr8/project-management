@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import { useAppSelector } from "@/app/redux";
 import Header from "@/components/header";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
@@ -74,7 +75,7 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
     isLoading,
   } = useGetTasksQuery({ projectId: Number(id) });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
   return (

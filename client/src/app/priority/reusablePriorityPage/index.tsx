@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/app/loading";
 import { useAppSelector } from "@/app/redux";
 import Header from "@/components/header";
 import ModalNewTask from "@/components/ModalNewTask";
@@ -132,7 +133,7 @@ const ReusablePriorityPage = ({ priority }: Props) => {
         </button>
       </div>
       {isLoading ? (
-        <div>Loading tasks...</div>
+        <Loading />
       ) : view === "list" ? (
         <div className="grid grid-cols-1 gap-4">
           {filteredTasks?.map((task: Task) => (

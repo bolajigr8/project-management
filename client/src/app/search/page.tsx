@@ -7,6 +7,7 @@ import UserCard from "@/components/UserCard";
 import { useSearchQuery } from "@/state/api";
 import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
+import Loading from "../loading";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +43,7 @@ const Search = () => {
         />
       </div>
       <div className="p-5">
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <Loading />}
         {isError && <p>Error occurred while fetching search results.</p>}
         {!isLoading && !isError && searchResults && (
           <div>

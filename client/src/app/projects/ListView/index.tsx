@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import Header from "@/components/header";
 import TaskCard from "@/components/TaskCard";
 import { Task, useGetTasksQuery } from "@/state/api";
@@ -15,7 +16,7 @@ const ListView = ({ id, setIsModalNewTaskOpen }: Props) => {
     isLoading,
   } = useGetTasksQuery({ projectId: Number(id) });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>An error occurred while fetching tasks</div>;
 
   return (

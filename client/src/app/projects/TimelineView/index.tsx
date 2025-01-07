@@ -1,3 +1,4 @@
+import Loading from "@/app/loading";
 import { useAppSelector } from "@/app/redux";
 import { useGetTasksQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
@@ -51,7 +52,7 @@ const Timeline = ({ id, setIsModalNewTaskOpen }: Props) => {
     }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error || !tasks) return <div>An error occurred while fetching tasks</div>;
 
   return (

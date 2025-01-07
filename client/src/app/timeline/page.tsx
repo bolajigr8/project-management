@@ -6,6 +6,7 @@ import { useGetProjectsQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import React, { useMemo, useState } from "react";
+import Loading from "../loading";
 
 type TaskTypeItems = "task" | "milestone" | "project";
 
@@ -41,7 +42,7 @@ const Timeline = () => {
     }));
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError || !projects)
     return <div>An error occurred while fetching projects</div>;
 

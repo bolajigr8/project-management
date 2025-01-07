@@ -12,6 +12,7 @@ import {
 } from "@mui/x-data-grid";
 import Image from "next/image";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
+import Loading from "../loading";
 
 // for filter and export at the top
 const CustomToolbar = () => (
@@ -48,7 +49,7 @@ const Users = () => {
   const { data: users, isLoading, isError } = useGetUsersQuery();
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError || !users) return <div>Error fetching users</div>;
 
   return (
