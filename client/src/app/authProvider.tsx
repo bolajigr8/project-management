@@ -44,13 +44,13 @@ const formFields = {
 
 const AuthProvider = ({ children }: any) => {
   return (
-    <div className="mt-[7rem] flex items-center justify-center sm:mt-[10rem]">
+    <div>
       <Authenticator formFields={formFields}>
         {({ user }: any) =>
           user ? (
             <div>{children}</div>
           ) : (
-            <div>
+            <div className="mt-[7rem] flex items-center justify-center sm:mt-[10rem]">
               <h1>Please sign in below:</h1>
             </div>
           )
