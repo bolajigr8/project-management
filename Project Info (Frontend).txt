@@ -1,0 +1,284 @@
+
+Frontend Notes
+
+
+- 1.  npm packages for the app
+
+npm i @mui/material @emotion/react @emotion/styled lucide react numeral date-fns axios recharts react-dnd react-dnd-html5-backend gantt-task-react @mui/x-data-grid
+
+- Their Uses:
+The command you provided installs several npm packages, each serving a different purpose in web development. Here's what each of them is used for:
+
+@mui/material: This is the core package for Material-UI, a popular React component library that implements Google's Material Design system. It provides ready-made components like buttons, sliders, dialogs, etc.
+
+@motion/react: This is a React library for animations and transitions. It's a part of the Motion family, helping developers create smooth and interactive animations.
+
+@motion/styled: This package is used with @motion/react to add motion (animations) directly to styled components. It integrates Motion's animations with styled-components, allowing you to animate styled elements.
+
+lucide-react: This is a library for icons in React. It provides a set of customizable icons that can be used in your application.
+
+numeral: Numeral.js is a library for formatting and manipulating numbers, particularly for use cases like currency formatting, percentage calculations, or large number handling.
+
+date-fns: This is a lightweight and modular date utility library. It helps you work with dates in JavaScript by providing functions for parsing, formatting, comparing, and manipulating dates.
+
+axios: Axios is a popular promise-based HTTP client used to make requests (e.g., fetching data from APIs) in JavaScript or React applications.
+
+recharts: Recharts is a charting library built with React. It provides components for rendering various types of charts (line, bar, pie, etc.) in your React applications.
+
+react-dnd: React DnD is a library for handling drag-and-drop interactions in React. It allows you to build complex drag-and-drop UIs with custom behavior.
+
+react-dnd-html5-backend: This is a backend for React DnD that uses the HTML5 drag-and-drop API for implementing drag-and-drop interactions.
+
+gantt-task-react: This is a React component for rendering Gantt charts, which are used for project management and task tracking. It provides an interactive way to visualize tasks and schedules.
+
+@mui/x-data-grid: This package is part of Material-UI and provides a powerful, customizable, and feature-rich data grid component for React. It's used to display and manage large datasets in a tabular format with features like sorting, pagination, and filtering.
+
+
+2.  
+I installed tailwind documentation a a n estension in vs code, to use while coding, ctrl + alt + t
+
+3.  
+npm i -D prettier prettier-plugin-tailwindcss - to authomatically sort our tailwind classes , npm i -D tailwind-merge to merge classes
+
+4. tsrafce  typescript snippets
+
+5. Redux setup  
+npm i react-redux @reduxjs/toolkit redux-persist dotenv
+
+redux persist is to store the states in local storage
+
+- create redux.tsx in the app, through edroe link in the desc of the video we can get for normal one or with redux persist
+- in src, create state folder and create index.ts, copy from the resources of project management app
+- for apis, we create the api.ts file in the stat also
+ 
+skeleton for api calls 
+
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+
+export const api = createApi({
+baseQuery: fetchBaseQuery({
+baseUrl:process.env.Next_PUBLIC_API_BASE_URL}), reducerPath:"api", tagTypes:[], endpoints:(build) => ({})
+})
+ 
+export const {} = api
+
+
+
+- Connecting our redux to our next.js application
+dashboardWrapper in the app and add it there, check it out in the app
+
+- Beautiful dark mode integration, sun and moon buttons
+
+
+6. put the api calls in the redux state (2:53)
+7. params is used in the project/[id]
+
+Re-usable components - sidebar setup, dark mode setup, redux setup with rtk api, admin panel-like setup, active buttons setup (tab-button), react dnd for drag and drop (read their docs), header for title, use format for dates, gant-task-react (github) for timeline, for tables mui x-datagrid (docs), the lib for  designing the tables - helps us to be able to re-use the function, modal using ReactDOM.createportal modal helps us for our forms especially createprojects, forms with select functionality and options, search query functionality for both frontenf and backend
+
+8. npm i lodash, npm i --save-dev @types/lodash --- for the debounce function
+
+9. Homepage with charts - 6:30
+
+AWS 
+
+10. prepare for aws upload - pushing to github
+delte .gitIgnore in client and server , in client rmdir /s /q .git
+, create .gitignore in the root directory, and put the following 
+client/node_modules
+server/node_modules
+client/dist/
+server/dist/
+client/.env
+server/.env
+client/.next/
+
+we are centralising our upload to github
+
+- git init in parent directory and upload to master in github
+
+in the server- ecosystem.config.js   for ec2 and pm2
+
+we go to AWS - 
+
+- To check for services being used bills or vpc
+- Amazon EC2 where we post our backend server
+- Amazon RDS is where we are going to be hosting our database
+- Amplify is where we'll be hosting frontend
+- s3 is where we'll host our files
+- Amazon cognito for authentification
+
+the first thing is to create a vpc - isolated set of services dedicated for your service, putting servers
+search for vpc {Virtual Private Cloud} - your vpcs - create fresh
+IPv4 CIDR block -  private ip address
+
+In AWS, an IPv4 CIDR block defines a range of IP addresses for your Virtual Private Cloud (VPC). The CIDR notation consists of an IP address followed by a slash and a number, indicating the number of bits used for the network portion. For example, 10.0.0.0/16 provides a range of IP addresses from 10.0.0.0 to 10.0.255.255. 
+
+ 10.0.0.0/16  = 8 + 8 =16 locking th first 2 but can change the last two numbers
+
+ - next is subnets are isolated sections , another set of ip ranges of the CIDR blocks where we can put our services - public and private
+ - ec2 in public and rds private4
+
+ create subnet - 7:38
+ 2 private and one public 
+
+ - then we create internat gateway, allows different users to access our vpcs
+ create internat gataway and under actions attach to vpc
+
+ - we also need to create route tables
+ create route tables - under actions - edit subnet associations
+1 public connected to the public subnet and 2 private to private subnets
+- then in public table we make it public by clicking the route table, under we go to routes- edit route- add route - 0.0.0.0/0- select internet gateway and choose the one created
+eg of a subnet pm_private-subnet-2
+
+- nacl used to set domain you wan no one to have access to - we not doing this 
+
+- Now we can create our ec2 to host our backend
+search ec2 - instances - launch instances (pm_ec2-backend) - create a new key/pair - network settings allow ssh to connect to intances, allow https and http and create security and click on edit - check the settings mak sure its ur vpc , under autoassign  enable - change securitygroup name to  (pm_ec2-sg) to block access by default
+launch instance
+
+go to instance and select instance id and click on connect, it should take us to a console {this is us accessing the computer remotely}
+
+
+- commands 
+sudo su -   = to give us universal priviledges
+
+follow the aws instructions in the server 
+
+when u reach  git --version
+ got to the repository, hit code and select the https url and type 
+ git clone url
+
+ to login to the instance to continue  sudo su -
+
+ after npm run dev, go to the pusblic address, open the link but remove s from https
+
+PM2 is a popular production-grade process manager for Node.js applications. It simplifies the deployment, monitoring, and management of applications by allowing you to run and maintain multiple Node.js processes efficiently. With PM2, you can start, stop, restart, and monitor your applications, ensuring high availability through features like automatic restarts on crashes, load balancing across multiple instances, and easy log management. It also provides a web-based dashboard for real-time monitoring and integrates well with various environments, making it ideal for scalable and stable application management.
+
+the ecosystem.config.mjs was specifically for pm2 
+
+-- **Modify the ecosystem file if necessary:**
+
+  ```
+  nano ecosystem.config.js
+
+  we can use ctr + o to save and ctr+ x to exit
+
+
+
+--- Now to create RDS which is going to live in the private subnet
+for database setup
+
+under database- create dtabase - standard create - postgresql
+database identifier name = pm-rds
+put the username and password and note it 
+under storage disable storage autoscaling
+put the vpc
+public access no
+vpc security group - create new - name it  say pm_rds-sg
+turn off performance insights
+for the second additional configurations
+
+ and name it pprojectmanagement
+ disable backups
+disable encryption
+
+continue from 8:08
+
+now the security groups created for both rds and ec2, but we have not allowed them to talk to each other
+
+in the database click the pm_rds database- got to vpc security group
+click it - select the security group id - edit inbound rules - add rules
+select postgresql, and select specifically from the ec2 and save rules
+now we have allowed the rds to accept traffic from the ec2
+now we got to ec2 to set outbound rules
+instances - select instance id - select security - select the security group - outbound rules - edit (set to all trafficc is okay) and we can add rule postgresql and select the rdsg and save
+
+go to the ec2 instance to communicate to the backend 
+pm2 delete all
+nano .env
+
+edit the database_url in your local server .env to suit what you created in the rds , master username and password
+
+DATABASE_URL="postgresql://micbol:Michael2001@pm-rds.cnmiw88w8y3f.us-east-1.rds.amazonaws.com:5432/projectmanagement?schema=public"
+
+to get instead of localhost, we go to rds and click the database and copy the endpoint to replace with localhost
+to check the names, click configurations, change the port also to 5432
+
+go to the ec2 instance and write database url and paste the new url inside quotes
+after that, hit ctr + o, ctr + c, ctr + x, and hit enter to save
+
+now because we are using prisma, npx prisma generate, npx prisma migrate dev --name init,  npm run seed
+one by one oo
+
+then we do pm2 start ecosystem.config.js
+
+to double check its actually working - ec2 -instance- instanceid - under public ipv4 address, open address, get rid of the s
+and do /projects - to see if the database is seeded
+
+-- Next we go to amplify where we host our frontend applications
+search amplify - create new app - github and next
+click my app is a monorepo bc we have client and server and then put the monorepo root directory as client - next 
+
+click advanced and add env variables , next and deploy
+to access the backend - we need to set up our backend to be https, we'll be using api gateway
+
+search api gatway on aws and click rest api snce we are using cognito , normally it would be http
+
+click build - name the api pm_api-gateway - create
+
+two ways to create - either create resource 
+or using proxy integration 
+create resource - proxy resource - check proxy resource, name, {proxy+}, check cors
+we need to set up integrations for  any - edit integration
+select http, http proxy interaction - http method to be any - endpoint (put the backend url http://18.208.186.33/{proxy}  )
+hit save and deploy new stage , prod
+get the url
+
+to connect this new url to the frontend 
+we go to amplify - hosting - environment variables and set
+
+  then we redeploy , got to master on the  overview and redeploy
+  and now it works with the backend
+
+  using s3bucket for images
+  searrch s3 - create bucket - name pm-s3-images - untick block public access, click i acknoledge- create bucket
+click on the bucket and upload files
+
+then we click permissions to create bucket policy - edit
+{
+"Version":  "2012-10-17",
+"Statement" : [
+  {
+    "Sid" : "PublicReadGetObject",
+    "Effect" : "Allow",
+    "Principal": "*",
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::pmg-s3-images/*"
+  }
+]
+
+}
+
+then we go next.config.mjs
+images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: ""
+    }
+  ]
+}
+
+
+Now unto authentification
+search cognito and creaate user pool
+cognitois an identity access manager service
+8:48
+
+
+
+
+
+
+

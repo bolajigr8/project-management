@@ -1,0 +1,112 @@
+Backend Notes 
+
+1.Setting up the postgresql and pgadmin
+
+Always plan your sql data
+- pgadmin is used to connect to postgresql server, remember your username and password, Michael2001 and on port 8000
+
+- open pgadmin and right click on the server to register a new server, note the name, everything in the connection, mostly in the host name we have localhost as its name and the password Michael2001
+To connect using the url, we need the username password  hostname port
+- in the database of the the new server ccreated n pgadmin, we create databse
+to see tables - schema tables
+- to seed database, we create backend 
+
+2. creating backend using node and express.js not next.js api
+ - in the terminal, npm init -y creating the package.json
+ - npm i -D ts-node typescript @types/node, then npx tsc --init
+
+ - either copy the tsconfig.json from the server or do the following, change module from commonjs to nodenext
+uncomment moduleresolution and name it nodenext, also uncomment resolveModule, also uncomment outDir and name ./dist, below the first object "include": ["src/**/*","src/data/**/*.json", "prisma/**/*"] - these are for types
+- npm i prisma @prisma/client, npx prisma init
+for this project we put the seedData in the prisma folder -- crucial for creating mock data
+ - create seed.ts in prisma folder
+ - install prisma extension for formatting 
+ - we create models for our database in the schemaprisma
+
+#Prisma is a modern Object-Relational Mapping (ORM) tool for working with databases in Node.js and TypeScript applications. It simplifies database access by allowing developers to interact with their database using an intuitive and type-safe API rather than writing raw SQL queries.
+
+ - after writing our models, then we go to package.json and in scripts, and put "seed": "ts-node prisma/seed.ts" , so we run the code for our seed file
+and we dit our databse urlin our .env
+
+ - then we run npx prisma generate, npx prisma migrate dev --name init, npm run seed to seed the database
+ - if theres a problem, npx prisma migrate reset to reset all the set up
+
+the database url can be a problem, this is a template 
+
+template 
+DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+
+- typical url to connect
+DATABASE_URL="postgresql://postgres:Michael2001@localhost:8000/projectmanagement?schema=public"
+
+ - in this case, postgres the second one is the name (username), localhost is the host name/address, port 8000, the name in the General i dont think its used
+ 
+ - you go to your pg admin and go to tables in your databse to see your tables, then press all rows at the top
+
+so thats how we create and connect our postgres database
+
+3. on to creating api's with node.js and express,.js
+ in the server still, npm i express body-parser cors dotenv helmet morgan 
+ 
+npm i -D rimraf concurrently nodemon @types/cors @types/express @types/morgan @types/node
+
+API Development:
+
+Use express to define routes and middleware.
+Use body-parser to parse incoming JSON requests.
+Use cors to allow requests from frontend clients hosted on different origins.
+Security and Logging:
+
+Use helmet for security best practices.
+Use morgan to log request details for monitoring.
+Development Automation:
+
+Use rimraf to clean build folders before each build.
+Use concurrently to simplify running backend and frontend development servers simultaneously.
+
+4. create a new folder in the server and name it src, a file in the src as index.ts, 
+specify the PORT in the .env
+
+and go to the package.json, under scripts "build": "rimraf dist && npx tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\"",
+    
+and then do npm run dev in the terminal
+
+To test, we open another termnal and write curl localhost:7000, you shpuld see the console.log
+
+
+we can also test using postman, since our backend is working we can start creating our api's
+
+we create the controllers  folder - projectControllers.ts, 
+for logic for our api's
+ 
+- to grab data from our database, const prisma = new PrismaClient();
+
+we create a new folder also in the src and name it routes- projectRoutes.ts
+
+we can use postman to test, or terminal curl localhost:7000/projects
+ - so we do the same for the others
+ - there was a problem of id, and it was rectified in 2:28:21
+
+command for resetting id in database: 
+`SELECT setval(pg_get_serial_sequence('"[DATA_MODEL_NAME_HERE]"', 'id'), coalesce(max(id)+1, 1), false) FROM "[DATA_MODEL_NAME_HERE]";`
+
+
+This query is used in PostgreSQL to reset or update the value of a serial (or sequence) column in a table, ensuring that newly inserted rows have properly incrementing values in the sequence.
+
+ - we press the query tool in the pgAdmin to run the code above, so that the id continues from 10 to 11 and dosent give server error
+
+
+
+Now it works, we did this for the project model and the problem occured when creating project 
+
+we do the same for the all other models 
+
+
+Now we proceed to the frontend and create our api calls from the redux state
+
+
+5. Implemented the search controllers for search
+
+
